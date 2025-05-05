@@ -81,3 +81,146 @@ int main() {
     cout << "Tree deleted." << endl;
     return 0;
 }
+
+
+
+Explanation -
+Here’s a **line-by-line explanation** of **Assignment No. 4: Constructing an Expression Tree from a Prefix Expression**, written in C++:
+
+---
+
+### 🔷 **`struct Node`**
+
+Defines a node in the expression tree:
+
+```cpp
+char data;        // holds the character (operand or operator)
+Node* left;       // pointer to left child
+Node* right;      // pointer to right child
+```
+
+The constructor initializes the node with a given value and sets both child pointers to `nullptr`.
+
+---
+
+### 🔷 **`tree()` Function**
+
+This function builds the **expression tree** from a **given prefix expression**:
+
+1. **Iterate through the prefix expression from right to left**:
+
+   * If the character is an **operand (alphabet)**, create a node and push it to the stack.
+   * If the character is an **operator**:
+
+     * Pop two nodes from the stack to become the right and left children of the new operator node.
+     * Push the new operator node back to the stack.
+
+2. **At the end**, the stack contains the root of the expression tree.
+
+---
+
+### 🔷 **`postorder()` Function**
+
+Performs **non-recursive post-order traversal** of the expression tree:
+
+1. Use two stacks (`s1` and `s2`):
+
+   * Push the root node onto `s1`.
+   * Pop from `s1` and push onto `s2`, and push the left and right children of the popped node onto `s1`.
+   * After the entire tree is processed, `s2` will contain nodes in post-order.
+2. **Print** the nodes in post-order from `s2`.
+
+---
+
+### 🔷 **`deleteTree()` Function**
+
+Deletes the entire expression tree:
+
+1. Use a stack to **iteratively traverse the tree**:
+
+   * Push the root node to the stack.
+   * For each node, push its left and right children to the stack.
+   * Delete the node once processed.
+2. After all nodes are deleted, set the root pointer to `nullptr`.
+
+---
+
+### 🔷 **`main()` Function**
+
+1. Accept a **prefix expression** as input from the user.
+2. Construct the expression tree using the `tree()` function.
+3. **Perform post-order traversal** and display the result.
+4. **Delete the tree** and display that it has been deleted.
+
+---
+
+### ✅ **Example Walkthrough**
+
+For input `+--a*bc/def`:
+
+* The **expression tree** is constructed based on the prefix notation.
+* Post-order traversal will print the expression in postfix order.
+* Finally, the tree is deleted.
+
+---
+
+Questions-
+✅ Assignment No. 4 Oral Questions with Answers
+Title: To construct an expression tree from the given prefix expression
+
+🔹 Conceptual Questions
+Q1. What is an Expression Tree?
+A: An expression tree is a binary tree where internal nodes represent operators and leaf nodes represent operands. It visually represents an arithmetic expression.
+
+Q2. What is a Prefix expression?
+A: A prefix expression (also known as Polish notation) is a notation in which the operator comes before the operands. Example: +AB means A + B.
+
+Q3. What are the advantages of using expression trees?
+A:
+
+Easy to evaluate expressions recursively
+
+Easy to convert between prefix, infix, and postfix
+
+Useful in compilers for syntax tree construction and code generation
+
+🔹 Implementation-Oriented Questions
+Q4. How do you construct an expression tree from a prefix expression?
+A:
+
+Start from the end of the prefix string
+
+Traverse right to left
+
+If character is operand, create a node and push it on a stack
+
+If character is operator, pop two nodes, make them children (left & right), and push the new tree back on the stack
+
+Repeat until the full tree is built
+
+Q5. Why do we traverse from right to left in prefix?
+A: Because in prefix notation, operators precede operands. So to properly attach operands to operators, we must start from the rightmost operand.
+
+Q6. What is postorder traversal?
+A: Postorder traversal is: Left → Right → Root. It is used to evaluate expression trees (in postfix format).
+
+Q7. How is non-recursive postorder traversal implemented?
+A: It is implemented using two stacks or one stack and a visited flag, to simulate the recursive behavior manually.
+
+Q8. What is the time complexity of constructing an expression tree?
+A: The time complexity is O(n), where n is the number of characters in the prefix expression.
+
+🔹 Deletion and Cleanup
+Q9. How do you delete the entire expression tree?
+A: Use postorder traversal to delete:
+First delete left and right children, then delete the root node.
+
+Q10. Why is postorder used for deletion?
+A: Because in postorder, we visit children before the parent. This ensures all sub-nodes are deleted before deleting the root.
+
+🔹 Additional Questions
+Q11. What are leaf nodes in an expression tree?
+A: Leaf nodes represent operands (constants or variables), and they do not have any children.
+
+Q12. Can an expression tree be constructed using infix notation directly?
+A: Not directly. Infix needs to be converted into prefix or postfix using stack-based methods before tree construction.
